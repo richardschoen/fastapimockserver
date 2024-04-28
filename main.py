@@ -34,7 +34,6 @@ import json
 import csv
 from pathlib import Path
 from datetime import datetime
-from dbibmi import DbIbmi
 from typing import Union
 from fastapi import FastAPI, Request,Response
 from pydantic import BaseModel
