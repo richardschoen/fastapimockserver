@@ -3,7 +3,7 @@
 # Put system config settings in here and include config.py in your apps
 
 [settings]
-mockfiledirectory=/mockjson
+mockfiledirectory=/fastapimockserver/mockjson
 debug=1
 allowrawfiles=1
 contenttyperaw=application/text
