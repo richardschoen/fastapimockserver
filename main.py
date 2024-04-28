@@ -1,4 +1,4 @@
-#!/QOpenSys/pkgs/bin/python3
+##/QOpenSys/pkgs/bin/python3
 ##/usr/bin/python3
 #------------------------------------------------
 # FastAPI Main script name: main.py
@@ -8,6 +8,17 @@
 # reading JSON and CSV content and returning back as JSON 
 # output.
 # 
+# FastAPI Setup How To:
+# https://github.com/richardschoen/howtostuff/blob/master/installpythonfastapi.md
+#
+# pip packages needed:
+## Install fastapi
+# pip3 install fastapi
+## Install uvicorn (The lightning fast ASGI server). This will be our web 
+## Note: Dont install with the [standard] option. This will possibly cause errors when trying to build some of the wheels.
+## app server component
+# pip3 install uvicorn
+#
 # TODO: ?
 #
 # Modifications
@@ -23,7 +34,7 @@
 # https://www.linkedin.com/pulse/how-convert-csv-json-array-python-rajashekhar-valipishetty-/ 
 #------------------------------------------------
 
-#Declare imports
+# Declare imports
 import configparser
 import sys
 from sys import platform
@@ -42,7 +53,7 @@ from fastapi.encoders import jsonable_encoder
 
 #--------------------------------------------------------------------------
 # Function: csvtojson
-# Desc: Function to convert a CSV file to JSON 
+# Desc: Function to convert a CSV file to Dictionary for return as JSON.
 # Parameters:
 # csvFilePath - Path to existing CSv file.
 # dictionaryName - Dictionary/JSON array name. Default=data
@@ -131,10 +142,6 @@ async def jsongetfile(jsonfile):
    jsondata=""
    tempfile="/tmp/jsontemp.json"
  
-   # App path
-   app_path=os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-   print(f"App path:{app_path}")
-
    # Build full path to CSV/JSON file 
    fullpath=f"{mockfiledirectory}/{jsonfile}"
 
@@ -154,24 +161,23 @@ async def jsongetfile(jsonfile):
 
    # Read JSON file if file is json
    if (file_extension==".json"):
-      # Read entire file contents for JSON
-      jsondata = Path(fullpath).read_text()
+      # Read entire JSON file contents as string
+      json_text = Path(fullpath).read_text()
+      # Convert string to Dictionary for JSON return
+      json_data = json.loads(json_text)             
    elif (file_extension==".csv"):
-      # Read entire file CSV contents and convert to JSON
-      jsondata=csvtojson(fullpath)
-      # Note: Can also convert to JSON file and read to file instead
-      #csvtojsonfile(fullpath,tempfile)
-      #jsondata = Path(tempfile).read_text()
+      # Read entire file CSV contents and convert to JSON 
+      json_data=csvtojson(fullpath)
    else: 
       # Return raw contents if returning raw contents enabled  
       if (allowrawfiles=="1"):
-         jsondata = Path(fullpath).read_text()
+         json_data = Path(fullpath).read_text()
       else:   
          raise Exception(f"File {jsonfile} type not supported.") 
-
-   #Use JSONResponse to convert array list to true JSON and return 
+   
+   # Use JSONResponse to convert array list to true JSON and return 
    if (file_extension==".csv" or file_extension==".json"):
-      json_compatible_data = jsonable_encoder(jsondata)
+      json_compatible_data = jsonable_encoder(json_data)
       return JSONResponse(content=json_compatible_data,media_type="application/json")
    else:
       return Response(content=jsondata, media_type=contenttyperaw)   
