@@ -35,3 +35,19 @@ Sample states.csv file served up as JSON:
 Sample weather.json file served up as raw JSON content:  
 ```http://1.1.1.1:3001/api/jsongetfile/weather.json```
 
+Sample customers.json file served up as raw JSON content:  
+```http://1.1.1.1:3001/api/jsongetfile/customers.json```
+
+### Adding Additional JSON or CSV Files   
+If you have other JSON or CSV files you want to serve up with the mock server, place them in the correct mockdatadirectory.   
+In our example the mockdatadirectory is: ```/fastapimockserver/mockjson```
+
+### More info on FastAPI
+FastAPI Home Page   
+https://fastapi.tiangolo.com
+
+How to install Python FastAPI Web Framework and Get Started on IBM i   
+https://github.com/richardschoen/howtostuff/blob/master/installpythonfastapi.md 
+
+
+
