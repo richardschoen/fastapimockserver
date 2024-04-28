@@ -180,7 +180,7 @@ async def jsongetfile(jsonfile):
       json_compatible_data = jsonable_encoder(json_data)
       return JSONResponse(content=json_compatible_data,media_type="application/json")
    else:
-      return Response(content=jsondata, media_type=contenttyperaw)   
+      return Response(content=json_data, media_type=contenttyperaw)   
 
  #------------------------------------------------
  # Handle Exceptions
