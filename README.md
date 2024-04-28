@@ -26,7 +26,8 @@ cd /fastapimockserver
 ./startapp.sh
 ```
 ### Access the API for initial testing
-Enter one of the following URLs to serve up a sample CSV and JSON file repectively. CSV files are converted to JSON before serving up results.   
+Enter one of the following URLs to serve up a sample CSV and JSON file repectively.   
+CSV files are converted on-the-fly to JSON before serving up results.   
 
 Sample states.csv file served up as JSON:  
 ```http://1.1.1.1:3001/api/jsongetfile/states.csv```
