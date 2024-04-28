@@ -1,0 +1,32 @@
+[
+  {
+    "date": "2024-04-24",
+    "temperatureC": 1,
+    "temperatureF": 33,
+    "summary": "Hot"
+  },
+  {
+    "date": "2024-04-25",
+    "temperatureC": 5,
+    "temperatureF": 40,
+    "summary": "Warm"
+  },
+  {
+    "date": "2024-04-26",
+    "temperatureC": 16,
+    "temperatureF": 60,
+    "summary": "Balmy"
+  },
+  {
+    "date": "2024-04-27",
+    "temperatureC": 4,
+    "temperatureF": 39,
+    "summary": "Scorching"
+  },
+  {
+    "date": "2024-04-28",
+    "temperatureC": 22,
+    "temperatureF": 71,
+    "summary": "Freezing"
+  }
+]
