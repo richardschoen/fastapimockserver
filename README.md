@@ -1,5 +1,7 @@
 # Python FastAPI Mock Server
-This project contains a Python FastAPI Mock Server for Serving JSON and CSV Files as JSON API Responses
+This project contains a very simple Python FastAPI Mock Server for Serving JSON and CSV Files as JSON API Responses.   
+
+A mock JSON and CSV server can be used for creating sample or test APIs or mocking up production APIs to test before they are fully defined. 
 
 ## Getting started
 
@@ -24,7 +26,7 @@ cd /fastapimockserver
 ./startapp.sh
 ```
 ### Access the API for initial testing
-Enter one of the following URLs to access a sample JSON file.
+Enter one of the following URLs to serve up a sample CSV and JSON file repectively. CSV files are converted to JSON before serving up results.   
 
 Sample states.csv file served up as JSON:  
 ```http://1.1.1.1:3001/api/jsongetfile/states.csv```
