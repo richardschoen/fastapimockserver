@@ -77,7 +77,7 @@ This route is used to read and return a CSV or JSON file.
 
 Parameters are posted via JSON in the request body.
 
-Content type should be:   
+Content type for post should be:   
 ```application/json```
 
 Parameters:   
@@ -98,7 +98,7 @@ This route is used to query a CSV or JSON file and return results as JSON.
 
 Parameters are posted via JSON in the request body.
 
-Content type should be:   
+Content type for post should be:   
 ```application/json```
 
 Parameters:   
