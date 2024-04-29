@@ -127,7 +127,9 @@ FastAPI Home Page
 https://fastapi.tiangolo.com
 
 How to install Python FastAPI Web Framework and Get Started on IBM i   
-https://github.com/richardschoen/howtostuff/blob/master/installpythonfastapi.md 
-
+https://github.com/richardschoen/howtostuff/blob/master/installpythonfastapi.md   
+ 
+JMESPath query language for JSON tutorial   
+https://jmespath.org/tutorial.html   
 
 
