@@ -1,5 +1,5 @@
 # Python FastAPI Mock Server
-This project contains a very simple Python FastAPI Mock Server for Serving JSON and CSV Files as JSON API Responses.   
+This mock server project contains a very simple Python FastAPI Mock Server for Serving JSON and CSV Files as JSON API Responses.   
 
 A mock JSON and CSV server can be used for creating sample or test APIs or mocking up production APIs to test before they are fully defined. 
 
