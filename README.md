@@ -103,7 +103,7 @@ Content type for post should be:
 ```application/json```
 
 Parameters:   
-{jsonfile} - JSON or CSV file to serve up as JSON.
+{jsonfile} - JSON or CSV file to serve up as JSON.   
 {jmescriteria} - JMES Query language criteria.   
 Ex state abbreviation=MN: ```data[Abbreviation=='MN']```  
 
