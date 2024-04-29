@@ -43,6 +43,8 @@ Sample weather.json file served up as raw JSON content:
 Sample customers.json file served up as raw JSON content:  
 ```http://1.1.1.1:3001/api/jsongetfile/customers.json```
 
+**If data is returned to yout browser as JSON, the server is working as expected.**
+
 ## API Routes
 
 ### Read CSV or JSON file and return as JSON via Get - /api/jsongetfile/{jsonfile}
