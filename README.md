@@ -51,7 +51,7 @@ Sample customers.json file served up as raw JSON content:
 This route is used to read and return a CSV or JSON file. 
 
 Parameters:   
-{jsonfile} - JSON or CSV file to serve up as JSON   
+```{jsonfile}``` - JSON or CSV file to serve up as JSON   
 
 Sample URL for states.csv file served up as JSON after GET:  
 ```http://1.1.1.1:3001/api/jsongetfile/states.csv```
@@ -66,8 +66,8 @@ Sample URL for customers.json file served up as raw JSON content after GET:
 This route is used to read and return a CSV or JSON file. 
 
 Parameters:   
-{jsonfile} - JSON or CSV file to serve up as JSON.  Ex: ```states.csv```   
-{jmescriteria} - JMES Query language criteria. ? encoded as ```%3F```    
+```{jsonfile}``` - JSON or CSV file to serve up as JSON.  Ex: ```states.csv```   
+```{jmescriteria}``` - JMES Query language criteria. ? encoded as ```%3F```    
 Ex state abbreviation=MN: ```data[%3FAbbreviation=='MN']```   
 
 Sample URL for states.csv file queried for state abbreviation = 'MN' served up as after GET:  
@@ -82,7 +82,7 @@ Content type for post should be:
 ```application/json```
 
 Parameters:   
-{jsonfile} - JSON or CSV file to serve up as JSON
+```{jsonfile}``` - JSON or CSV file to serve up as JSON
 
 Sample JSON post body:   
 ```
@@ -103,8 +103,8 @@ Content type for post should be:
 ```application/json```
 
 Parameters:   
-{jsonfile} - JSON or CSV file to serve up as JSON.   
-{jmescriteria} - JMES Query language criteria.   
+```{jsonfile}``` - JSON or CSV file to serve up as JSON.   
+```{jmescriteria}``` - JMES Query language criteria.   
 Ex state abbreviation=MN: ```data[Abbreviation=='MN']```  
 
 Sample JSON post body:   
