@@ -86,7 +86,7 @@ Parameters:
 Sample JSON post body:   
 ```
 {
-"jsonfile":"filename.json
+"jsonfile":"filename.json"
 }
 ```
 
@@ -108,12 +108,12 @@ Parameters:
 Sample JSON post body:   
 ```
 {
-"jsonfile":"filename.json,   
+"jsonfile":"filename.json",   
 "jmescriteria":"data[?Abbreviation=='MN']"   
 }
 ```
 
-Sample states.csv file queried and served up as JSON:  
+Sample states.csv file queried for state abbreviation = 'MN' served up as JSON:  
 ```http://1.1.1.1:3001/api/jsonqueryfile```
 
 ### Adding Additional JSON or CSV Files to the Mock Server   
