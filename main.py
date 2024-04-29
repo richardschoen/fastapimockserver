@@ -6,7 +6,9 @@
 # Description: 
 # This is a sample FastAPI JSON Mock REST service for 
 # reading JSON and CSV content and returning back as JSON 
-# output.
+# output. 
+# It supports reading entire JSON and CSV files or querying 
+# the JSON results using JMESPath JSON query language. 
 # 
 # FastAPI Setup How To:
 # https://github.com/richardschoen/howtostuff/blob/master/installpythonfastapi.md
@@ -18,6 +20,8 @@
 ## Note: Dont install with the [standard] option. This will possibly cause errors when trying to build some of the wheels.
 ## app server component
 # pip3 install uvicorn
+# Install JMESPath JSON Query Language
+# pip3 install jmespath
 #
 # TODO: ?
 #
@@ -32,6 +36,8 @@
 # https://fastapi.tiangolo.com/tutorial/handling-errors/
 # https://www.geeksforgeeks.org/convert-csv-to-json-using-python/
 # https://www.linkedin.com/pulse/how-convert-csv-json-array-python-rajashekhar-valipishetty-/ 
+# JMESPath JSON Query Language Tutorial
+# https://jmespath.org/tutorial.html#filter-projections
 #------------------------------------------------
 
 # Declare imports
@@ -50,6 +56,7 @@ from fastapi import FastAPI, Request,Response
 from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
+import jmespath
 
 #--------------------------------------------------------------------------
 # Function: csvtojson
@@ -129,7 +136,9 @@ def readroot():
 
 #--------------------------------------------------------------------------
 # Route function: jsongetfile
-# Desc: Read CSV or JSON file and return as JSON
+# Desc: Read CSV or JSON file and return as JSON via Get
+# Parameters:
+# jsonfile - JSON file name without path.  Ex: states.csv or weather.json
 #--------------------------------------------------------------------------
 @app.get("/api/jsongetfile/{jsonfile}")
 async def jsongetfile(jsonfile):
@@ -140,8 +149,7 @@ async def jsongetfile(jsonfile):
  try:  
 
    jsondata=""
-   tempfile="/tmp/jsontemp.json"
- 
+   
    # Build full path to CSV/JSON file 
    fullpath=f"{mockfiledirectory}/{jsonfile}"
 
@@ -178,6 +186,246 @@ async def jsongetfile(jsonfile):
    # Use JSONResponse to convert array list to true JSON and return 
    if (file_extension==".csv" or file_extension==".json"):
       json_compatible_data = jsonable_encoder(json_data)
+      return JSONResponse(content=json_compatible_data,media_type="application/json")
+   else:
+      return Response(content=json_data, media_type=contenttyperaw)   
+
+ #------------------------------------------------
+ # Handle Exceptions
+ #------------------------------------------------
+ except Exception as ex: # Catch and handle exceptions
+
+   # Print exception to STDOUT for debugging
+   traceback.print_exc()        
+
+   # Return error info. If debug enabled, return actual exception
+   # otherwise return a general message
+   if (debug=="1"):
+      returnstr="{\"error\":" + str(traceback.format_exception(None, ex, ex.__traceback__)) + "}"
+   else:
+      returnstr="{\"error\":" + "Error occurred during getjsonfile" + "}"
+
+   return JSONResponse(status_code=404,content=returnstr,media_type="application/json")   
+
+#--------------------------------------------------------------------------
+# Route function: jsonqueryfile
+# Desc: Query CSV or JSON file and return as JSON using Get
+# Parameters:
+# jsonfile - JSON file name without path.  Ex: states.csv or weather.json
+# jmescriteria - JMES query criteria. Ex for states.csv: data[?Abbreviation='MN']
+#--------------------------------------------------------------------------
+@app.get("/api/jsonqueryfile/{jsonfile}/{jmescriteria}")
+async def jsonqueryfile(jsonfile,jmescriteria):
+
+ #------------------------------------------------
+ # Let's do the work
+ #------------------------------------------------
+ try:  
+
+   jsondata=""
+ 
+   # Build full path to CSV/JSON file 
+   fullpath=f"{mockfiledirectory}/{jsonfile}"
+
+   # this will return a tuple of root and extension
+   split_tup = os.path.splitext(jsonfile) 
+   # extract the file name and extension
+   file_name = split_tup[0].lower()
+   file_extension = split_tup[1].lower()
+
+   # See if mock data directory exists. if not, bail out
+   if (os.path.isdir(mockfiledirectory)==False):
+      raise Exception(f"Directory {mockfiledirectory} not found.") 
+
+   # See if file exists. if not, bail out
+   if (os.path.exists(fullpath)==False):
+      raise Exception(f"File {jsonfile} not found.") 
+
+   # Read JSON file if file is json
+   if (file_extension==".json"):
+      # Read entire JSON file contents as string
+      json_text = Path(fullpath).read_text()
+      # Convert string to Dictionary for JSON return
+      json_data = json.loads(json_text)             
+   elif (file_extension==".csv"):
+      # Read entire file CSV contents and convert to JSON 
+      json_data=csvtojson(fullpath)
+   else: 
+      # Return raw contents if returning raw contents enabled  
+      if (allowrawfiles=="1"):
+         json_data = Path(fullpath).read_text()
+      else:   
+         raise Exception(f"File {jsonfile} type not supported.") 
+   
+   # Use JSONResponse to convert array list to true JSON and return 
+   if (file_extension==".csv" or file_extension==".json"):
+      jmesquerycriteria=f"{jmescriteria}"
+      print(jmesquerycriteria)
+      json_data2=jmespath.search(f"{jmesquerycriteria}", json_data)
+      print(json_data2)
+      json_compatible_data = jsonable_encoder(json_data2)
+      ##json_compatible_data = jsonable_encoder(json_data)
+      return JSONResponse(content=json_compatible_data,media_type="application/json")
+   else:
+      return Response(content=json_data, media_type=contenttyperaw)   
+
+ #------------------------------------------------
+ # Handle Exceptions
+ #------------------------------------------------
+ except Exception as ex: # Catch and handle exceptions
+
+   # Print exception to STDOUT for debugging
+   traceback.print_exc()        
+
+   # Return error info. If debug enabled, return actual exception
+   # otherwise return a general message
+   if (debug=="1"):
+      returnstr="{\"error\":" + str(traceback.format_exception(None, ex, ex.__traceback__)) + "}"
+   else:
+      returnstr="{\"error\":" + "Error occurred during getjsonfile" + "}"
+
+   return JSONResponse(status_code=404,content=returnstr,media_type="application/json")   
+
+#--------------------------------------------------------------------------
+# Route function: jsongetfile
+# Desc: Get CSV or JSON file and return as JSON using Post
+# JSON body parameters:
+# jsonfile - JSON file name without path.  Ex: states.csv or weather.json
+#--------------------------------------------------------------------------
+@app.post("/api/jsongetfile")
+async def jsongetfilepost(request: Request):
+
+ #------------------------------------------------
+ # Let's do the work
+ #------------------------------------------------
+ try:  
+
+   jsondata=""
+ 
+   # Get the JSON post request data 
+   jsonreqdata = await request.json()
+
+   # Get fields from the posted JSON data
+   jsonfile = jsonreqdata['jsonfile']
+
+   # Build full path to CSV/JSON file 
+   fullpath=f"{mockfiledirectory}/{jsonfile}"
+
+   # this will return a tuple of root and extension
+   split_tup = os.path.splitext(jsonfile) 
+   # extract the file name and extension
+   file_name = split_tup[0].lower()
+   file_extension = split_tup[1].lower()
+
+   # See if mock data directory exists. if not, bail out
+   if (os.path.isdir(mockfiledirectory)==False):
+      raise Exception(f"Directory {mockfiledirectory} not found.") 
+
+   # See if file exists. if not, bail out
+   if (os.path.exists(fullpath)==False):
+      raise Exception(f"File {jsonfile} not found.") 
+
+   # Read JSON file if file is json
+   if (file_extension==".json"):
+      # Read entire JSON file contents as string
+      json_text = Path(fullpath).read_text()
+      # Convert string to Dictionary for JSON return
+      json_data = json.loads(json_text)             
+   elif (file_extension==".csv"):
+      # Read entire file CSV contents and convert to JSON 
+      json_data=csvtojson(fullpath)
+   else: 
+      # Return raw contents if returning raw contents enabled  
+      if (allowrawfiles=="1"):
+         json_data = Path(fullpath).read_text()
+      else:   
+         raise Exception(f"File {jsonfile} type not supported.") 
+   
+   # Use JSONResponse to convert array list to true JSON and return 
+   if (file_extension==".csv" or file_extension==".json"):
+      json_compatible_data = jsonable_encoder(json_data)
+      return JSONResponse(content=json_compatible_data,media_type="application/json")
+   else:
+      return Response(content=json_data, media_type=contenttyperaw)   
+
+ #------------------------------------------------
+ # Handle Exceptions
+ #------------------------------------------------
+ except Exception as ex: # Catch and handle exceptions
+
+   # Print exception to STDOUT for debugging
+   traceback.print_exc()        
+
+   # Return error info. If debug enabled, return actual exception
+   # otherwise return a general message
+   if (debug=="1"):
+      returnstr="{\"error\":" + str(traceback.format_exception(None, ex, ex.__traceback__)) + "}"
+   else:
+      returnstr="{\"error\":" + "Error occurred during getjsonfile" + "}"
+
+   return JSONResponse(status_code=404,content=returnstr,media_type="application/json")   
+
+#--------------------------------------------------------------------------
+# Route function: jsonqueryfile
+# Desc: Query CSV or JSON file and return as JSON using Post
+# JSON body parameters:
+# jsonfile - JSON file name without path.  Ex: states.csv or weather.json
+# jmescriteria - JMES query criteria. Ex for states.csv: data[?Abbreviation='MN']
+#--------------------------------------------------------------------------
+@app.post("/api/jsonqueryfile")
+async def jsonqueryfilepost(request: Request):
+
+ #------------------------------------------------
+ # Let's do the work
+ #------------------------------------------------
+ try:  
+
+   jsondata=""
+ 
+   # Get the JSON post request data 
+   jsonreqdata = await request.json()
+
+   # Get fields from the posted JSON data
+   jsonfile = jsonreqdata['jsonfile']
+   jmescriteria = jsonreqdata['jmescriteria']
+
+   # Build full path to CSV/JSON file 
+   fullpath=f"{mockfiledirectory}/{jsonfile}"
+
+   # this will return a tuple of root and extension
+   split_tup = os.path.splitext(jsonfile) 
+   # extract the file name and extension
+   file_name = split_tup[0].lower()
+   file_extension = split_tup[1].lower()
+
+   # See if mock data directory exists. if not, bail out
+   if (os.path.isdir(mockfiledirectory)==False):
+      raise Exception(f"Directory {mockfiledirectory} not found.") 
+
+   # See if file exists. if not, bail out
+   if (os.path.exists(fullpath)==False):
+      raise Exception(f"File {jsonfile} not found.") 
+
+   # Read JSON file if file is json
+   if (file_extension==".json"):
+      # Read entire JSON file contents as string
+      json_text = Path(fullpath).read_text()
+      # Convert string to Dictionary for JSON return
+      json_data = json.loads(json_text)             
+   elif (file_extension==".csv"):
+      # Read entire file CSV contents and convert to JSON 
+      json_data=csvtojson(fullpath)
+   else: 
+      # Return raw contents if returning raw contents enabled  
+      if (allowrawfiles=="1"):
+         json_data = Path(fullpath).read_text()
+      else:   
+         raise Exception(f"File {jsonfile} type not supported.") 
+   
+   # Use JSONResponse to convert array list to true JSON and return 
+   if (file_extension==".csv" or file_extension==".json"):
+      json_data2=jmespath.search(f"{jmescriteria}", json_data)
+      json_compatible_data = jsonable_encoder(json_data2)
       return JSONResponse(content=json_compatible_data,media_type="application/json")
    else:
       return Response(content=json_data, media_type=contenttyperaw)   
