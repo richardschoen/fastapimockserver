@@ -91,8 +91,8 @@ Sample JSON post body:
 Sample states.csv file served up as JSON:  
 ```http://1.1.1.1:3001/api/jsongetfile```
 
-### Read CSV or JSON file and return as JSON via Post - /api/jsongetfile
-This route is used to read and return a CSV or JSON file. 
+### Query CSV or JSON file and return as JSON via Post - /api/jsongetfile
+This route is used to query a CSV or JSON file and return results as JSON.  
 
 Parameters are posted via JSON in the request body.
 
@@ -100,8 +100,8 @@ Content type should be:
 ```application/json```
 
 Parameters:   
-{jsonfile} - JSON or CSV file to serve up as JSON   
-{jmescriteria} - JMES Query language criteria.  Ex state abbreviation=MN: ```data[%3FAbbreviation=='MN']```  
+{jsonfile} - JSON or CSV file to serve up as JSON.
+{jmescriteria} - JMES Query language criteria.  Ex state abbreviation=MN: ```data[Abbreviation=='MN']```  
 
 Sample JSON post body:   
 ```
