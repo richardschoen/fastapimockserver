@@ -27,6 +27,9 @@ The following script file will start the FastAPI server to monitor all IP addres
 cd /fastapimockserver
 ./startapp.sh
 ```
+
+## Initial API Test
+
 ### Access the API for initial testing
 Enter one of the following URLs to serve up a sample CSV and JSON file repectively.   
 CSV files are converted on-the-fly to JSON before serving up results.   
@@ -40,7 +43,9 @@ Sample weather.json file served up as raw JSON content:
 Sample customers.json file served up as raw JSON content:  
 ```http://1.1.1.1:3001/api/jsongetfile/customers.json```
 
-### /api/jsongetfile/{jsonfile} - Read CSV or JSON file and return as JSON via Get
+## API Routes
+
+### Read CSV or JSON file and return as JSON via Get - /api/jsongetfile/{jsonfile}
 This route is used to read and return a CSV or JSON file. 
 
 Parameters:
@@ -49,13 +54,65 @@ Parameters:
 Sample states.csv file served up as JSON:  
 ```http://1.1.1.1:3001/api/jsongetfile/states.csv```
 
-### /api/jsonqueryfile/{jsonfile}/{jmescriteria} - Query CSV or JSON file and return as JSON via Get
+Sample weather.json file served up as raw JSON content:  
+```http://1.1.1.1:3001/api/jsongetfile/weather.json```
+
+Sample customers.json file served up as raw JSON content:  
+```http://1.1.1.1:3001/api/jsongetfile/customers.json```
+
+### Query CSV or JSON file and return as JSON via Get - /api/jsonqueryfile/{jsonfile}/{jmescriteria}
 This route is used to read and return a CSV or JSON file. 
 
 Parameters:
-{jsonfile} - JSON or CSV file to serve up as JSON.  Ex: ```states.csv``` 
-{jmescriteria} - JMES Query language criteria.  
+{jsonfile} - JSON or CSV file to serve up as JSON.  Ex: ```states.csv```   
+{jmescriteria} - JMES Query language criteria.  Ex state abbreviation=MN: ```data[%3FAbbreviation=='MN']```
 
+Sample states.csv file queried for state abbreviation = 'MN' served up as JSON:  
+```http://1.1.1.1:3001/api/jsongetfile/states.csv/data[%3FAbbreviation=='MN']```  
+
+### Read CSV or JSON file and return as JSON via Post - /api/jsongetfile
+This route is used to read and return a CSV or JSON file. 
+
+Parameters are posted via JSON in the request body.
+
+Content type should be:   
+```application/json```
+
+Parameters:   
+{jsonfile} - JSON or CSV file to serve up as JSON
+
+Sample JSON post body:   
+```
+{
+"jsonfile":"filename.json
+}
+```
+
+Sample states.csv file served up as JSON:  
+```http://1.1.1.1:3001/api/jsongetfile```
+
+### Read CSV or JSON file and return as JSON via Post - /api/jsongetfile
+This route is used to read and return a CSV or JSON file. 
+
+Parameters are posted via JSON in the request body.
+
+Content type should be:   
+```application/json```
+
+Parameters:   
+{jsonfile} - JSON or CSV file to serve up as JSON   
+{jmescriteria} - JMES Query language criteria.  Ex state abbreviation=MN: ```data[%3FAbbreviation=='MN']```  
+
+Sample JSON post body:   
+```
+{
+"jsonfile":"filename.json,   
+"jmescriteria":"data[?Abbreviation=='MN']"   
+}
+```
+
+Sample states.csv file queried and served up as JSON:  
+```http://1.1.1.1:3001/api/jsonqueryfile```
 
 ### Adding Additional JSON or CSV Files   
 If you have other JSON or CSV files you want to serve up with the mock server, place them in the correct mockdatadirectory.   
