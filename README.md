@@ -48,8 +48,8 @@ Sample customers.json file served up as raw JSON content:
 ### Read CSV or JSON file and return as JSON via Get - /api/jsongetfile/{jsonfile}
 This route is used to read and return a CSV or JSON file. 
 
-Parameters:
-{jsonfile} - JSON or CSV file to serve up as JSON
+Parameters:   
+{jsonfile} - JSON or CSV file to serve up as JSON   
 
 Sample states.csv file served up as JSON:  
 ```http://1.1.1.1:3001/api/jsongetfile/states.csv```
@@ -63,9 +63,9 @@ Sample customers.json file served up as raw JSON content:
 ### Query CSV or JSON file and return as JSON via Get - /api/jsonqueryfile/{jsonfile}/{jmescriteria}
 This route is used to read and return a CSV or JSON file. 
 
-Parameters:
+Parameters:   
 {jsonfile} - JSON or CSV file to serve up as JSON.  Ex: ```states.csv```   
-{jmescriteria} - JMES Query language criteria.  Ex state abbreviation=MN: ```data[%3FAbbreviation=='MN']```
+{jmescriteria} - JMES Query language criteria.  Ex state abbreviation=MN: ```data[%3FAbbreviation=='MN']```   
 
 Sample states.csv file queried for state abbreviation = 'MN' served up as JSON:  
 ```http://1.1.1.1:3001/api/jsongetfile/states.csv/data[%3FAbbreviation=='MN']```  
