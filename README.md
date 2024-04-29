@@ -114,11 +114,11 @@ Sample JSON post body:
 Sample states.csv file queried and served up as JSON:  
 ```http://1.1.1.1:3001/api/jsonqueryfile```
 
-### Adding Additional JSON or CSV Files   
+### Adding Additional JSON or CSV Files to the Mock Server   
 If you have other JSON or CSV files you want to serve up with the mock server, place them in the correct mockdatadirectory.   
 In our example the mockdatadirectory is: ```/fastapimockserver/mockjson```
 
-### More info on FastAPI
+### More info on FastAPI   
 FastAPI Home Page   
 https://fastapi.tiangolo.com
 
