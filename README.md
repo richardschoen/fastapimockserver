@@ -40,6 +40,23 @@ Sample weather.json file served up as raw JSON content:
 Sample customers.json file served up as raw JSON content:  
 ```http://1.1.1.1:3001/api/jsongetfile/customers.json```
 
+### /api/jsongetfile/{jsonfile} - Read CSV or JSON file and return as JSON via Get
+This route is used to read and return a CSV or JSON file. 
+
+Parameters:
+{jsonfile} - JSON or CSV file to serve up as JSON
+
+Sample states.csv file served up as JSON:  
+```http://1.1.1.1:3001/api/jsongetfile/states.csv```
+
+### /api/jsonqueryfile/{jsonfile}/{jmescriteria} - Query CSV or JSON file and return as JSON via Get
+This route is used to read and return a CSV or JSON file. 
+
+Parameters:
+{jsonfile} - JSON or CSV file to serve up as JSON.  Ex: ```states.csv``` 
+{jmescriteria} - JMES Query language criteria.  
+
+
 ### Adding Additional JSON or CSV Files   
 If you have other JSON or CSV files you want to serve up with the mock server, place them in the correct mockdatadirectory.   
 In our example the mockdatadirectory is: ```/fastapimockserver/mockjson```
