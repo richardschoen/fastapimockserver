@@ -67,7 +67,7 @@ This route is used to read and return a CSV or JSON file.
 
 Parameters:   
 ```{jsonfile}``` - JSON or CSV file to serve up as JSON.  Ex: ```states.csv```   
-```{jmescriteria}``` - JMES Query language criteria. ? encoded as ```%3F```    
+```{jmescriteria}``` - JMESPath Query language criteria. ? encoded as ```%3F```    
 Ex state abbreviation=MN: ```data[%3FAbbreviation=='MN']```   
 
 Sample URL for states.csv file queried for state abbreviation = 'MN' served up as after GET:  
@@ -104,7 +104,7 @@ Content type for post should be:
 
 Parameters:   
 ```{jsonfile}``` - JSON or CSV file to serve up as JSON.   
-```{jmescriteria}``` - JMES Query language criteria.   
+```{jmescriteria}``` - JMESPath Query language criteria.   
 Ex state abbreviation=MN: ```data[Abbreviation=='MN']```  
 
 Sample JSON post body:   
