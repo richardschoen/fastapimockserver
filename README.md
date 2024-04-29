@@ -94,7 +94,7 @@ Sample JSON post body:
 Sample URL for states.csv file served up as JSON after POST:  
 ```http://1.1.1.1:3001/api/jsongetfile```
 
-### Query CSV or JSON file and return as JSON via Post - /api/jsongetfile
+### Query CSV or JSON file and return as JSON via Post - /api/jsonqueryfile
 This route is used to query a CSV or JSON file and return results as JSON.  
 
 Parameters are posted via JSON in the request body.
