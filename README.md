@@ -71,7 +71,7 @@ Parameters:
 Ex state abbreviation=MN: ```data[%3FAbbreviation=='MN']```   
 
 Sample URL for states.csv file queried for state abbreviation = 'MN' served up as after GET:  
-```http://1.1.1.1:3001/api/jsongetfile/states.csv/data[%3FAbbreviation=='MN']```  
+```http://1.1.1.1:3001/api/jsonqueryfile/states.csv/data[%3FAbbreviation=='MN']```  
 
 ### Read CSV or JSON file and return as JSON via Post - /api/jsongetfile
 This route is used to read and return a CSV or JSON file. 
