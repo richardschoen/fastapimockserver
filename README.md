@@ -53,13 +53,13 @@ This route is used to read and return a CSV or JSON file.
 Parameters:   
 {jsonfile} - JSON or CSV file to serve up as JSON   
 
-Sample states.csv file served up as JSON after GET:  
+Sample URL for states.csv file served up as JSON after GET:  
 ```http://1.1.1.1:3001/api/jsongetfile/states.csv```
 
-Sample weather.json file served up as raw JSON content after GET:  
+Sample URL for weather.json file served up as raw JSON content after GET:  
 ```http://1.1.1.1:3001/api/jsongetfile/weather.json```
 
-Sample customers.json file served up as raw JSON content after GET:  
+Sample URL for customers.json file served up as raw JSON content after GET:  
 ```http://1.1.1.1:3001/api/jsongetfile/customers.json```
 
 ### Query CSV or JSON file and return as JSON via Get - /api/jsonqueryfile/{jsonfile}/{jmescriteria}
@@ -70,7 +70,7 @@ Parameters:
 {jmescriteria} - JMES Query language criteria. ? encoded as ```%3F```    
 Ex state abbreviation=MN: ```data[%3FAbbreviation=='MN']```   
 
-Sample states.csv file queried for state abbreviation = 'MN' served up as after GET:  
+Sample URL for states.csv file queried for state abbreviation = 'MN' served up as after GET:  
 ```http://1.1.1.1:3001/api/jsongetfile/states.csv/data[%3FAbbreviation=='MN']```  
 
 ### Read CSV or JSON file and return as JSON via Post - /api/jsongetfile
@@ -87,11 +87,11 @@ Parameters:
 Sample JSON post body:   
 ```
 {
-"jsonfile":"filename.json"
+"jsonfile":"states.csv"
 }
 ```
 
-Sample states.csv file served up as JSON after POST:  
+Sample URL for states.csv file served up as JSON after POST:  
 ```http://1.1.1.1:3001/api/jsongetfile```
 
 ### Query CSV or JSON file and return as JSON via Post - /api/jsongetfile
@@ -109,12 +109,12 @@ Parameters:
 Sample JSON post body:   
 ```
 {
-"jsonfile":"filename.json",   
+"jsonfile":"states.csv",   
 "jmescriteria":"data[?Abbreviation=='MN']"   
 }
 ```
 
-Sample states.csv file queried for state abbreviation = 'MN' served up as JSON after POST:  
+Sample URL for states.csv file queried for state abbreviation = 'MN' served up as JSON after POST:  
 ```http://1.1.1.1:3001/api/jsonqueryfile```
 
 ### Adding Additional JSON or CSV Files to the Mock Server   
