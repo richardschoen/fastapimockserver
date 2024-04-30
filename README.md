@@ -18,7 +18,7 @@ git clone https://github.com/richardschoen/fastapimockserver
 ```
 
 ### Edit the Config File 
-Edit the config file ```config.py``` and make sure the ```mockdatadirectory``` setting matches the location where you cloned the project.   
+Edit the config file ```config.cfg``` and make sure the ```mockdatadirectory``` setting matches the location where you cloned the project.
 
 The default location for mockjson data is: ```/fastapimockserver/mockjson```
 
