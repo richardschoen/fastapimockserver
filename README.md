@@ -151,10 +151,10 @@ In our example the mockdatadirectory is: `/fastapimockserver/mockjson`
 
 ### More info on FastAPI
 
-FastAPI Home Page
+FastAPI Home Page  
 <https://fastapi.tiangolo.com>
 
-How to install Python FastAPI Web Framework and Get Started on IBM i
+How to install Python FastAPI Web Framework and Get Started on IBM i  
 <https://github.com/richardschoen/howtostuff/blob/master/installpythonfastapi.md>
 
 JMESPath query language for JSON tutorial  
