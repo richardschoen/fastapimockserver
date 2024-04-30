@@ -29,7 +29,7 @@ The default location for mockjson data is: `/fastapimockserver/mockjson`
 
 ```sh
 python -m venv my_venv --system-site-packages
-. myvenv/bin/activate
+. my_venv/bin/activate
 ```
 
 ### Install the necessary support modules
