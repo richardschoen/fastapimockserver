@@ -1,7 +1,7 @@
 # Python FastAPI Mock Server
 This mock server project contains a very simple Python FastAPI Mock Server for Serving JSON and CSV Files as JSON API Responses.   
 
-The server can be used to serve up static JSON and CSV files as JSON. JSON files can also be queried using the JMESPath JSON query language. Or you can extend the server with your own API calls.
+The server can be used to serve up static JSON and CSV files as JSON responses. JSON and CSV files can also be queried using the JMESPath JSON query language. Or you can extend the server with your own API calls.
 
 A mock JSON and CSV server can be used for retrieving and querying sample CSV and JSON data while developing mobile or other applications that need to receive data and the app APIs are not fully defined yet. Simply compose some CSV or JSON data, place the files on the server and start serving up your mocked up data. 
 
