@@ -25,7 +25,7 @@ Edit the config file `config.cfg` and make sure the `mockdatadirectory` setting 
 
 The default location for mockjson data is: `/fastapimockserver/mockjson`
 
-### Create a virtual environment and activate it
+### Create a virtual environment and activate it (if you want to use venv)
 
 ```sh
 python -m venv my_venv --system-site-packages
