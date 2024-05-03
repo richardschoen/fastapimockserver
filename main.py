@@ -115,7 +115,7 @@ def csvtojson(csvFilePath,dictionaryName="data"):
       return json_dictionary
 
 #--------------------------------------------------------------------------
-# Read settings from config.py file
+# Read settings from config.cfg file
 #--------------------------------------------------------------------------
 config = configparser.ConfigParser()
 config.read('config.cfg')
