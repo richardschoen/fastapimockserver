@@ -306,20 +306,11 @@ async def jsonqueryfile(jsonfile,jmescriteria):
 #--------------------------------------------------------------------------
 @app.post("/api/jsongetfile")
 async def jsongetfilepost(params: PostParamsJsonGetFile):
-#async def jsongetfilepost(request: Request):
 
  #------------------------------------------------
  # Let's do the work
  #------------------------------------------------
  try:  
-
-   ##jsondata=""
- 
-   # Get the JSON post request data 
-   ##jsonreqdata = await request.json()
-
-   # Get fields from the posted JSON data
-   ##jsonfile = jsonreqdata['jsonfile']
 
    # Get fields from the posted JSON data
    jsonfile = params.jsonfile
@@ -390,21 +381,11 @@ async def jsongetfilepost(params: PostParamsJsonGetFile):
 #--------------------------------------------------------------------------
 @app.post("/api/jsonqueryfile")
 async def jsonqueryfilepost(params: PostParamsJsonQueryFile):
-##async def jsonqueryfilepost(request: Request):
 
  #------------------------------------------------
  # Let's do the work
  #------------------------------------------------
  try:  
-
-   ##jsondata=""
- 
-   # Get the JSON post request data 
-   ##jsonreqdata = await request.json()
-
-   # Get fields from the posted JSON data
-   ##jsonfile = jsonreqdata['jsonfile']
-   ##jmescriteria = jsonreqdata['jmescriteria']
   
    # Get fields from the posted JSON data
    jsonfile = params.jsonfile 
