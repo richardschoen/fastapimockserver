@@ -26,7 +26,9 @@
 # TODO: ?
 #
 # Modifications
-# x/xx/xx - xxx - Desc
+# 5/2/2024 - RJS - Updated to use parameter classes instead of processing the request body itself. 
+#                  The old way worked, but the body entry would not show up in the OpenAPI docs which
+#                  means the POST operations could not be tested with OpenAPI. Now they can.
 #
 # Links:
 # https://fastapi.tiangolo.com/advanced/response-directly/
@@ -57,6 +59,7 @@ from pydantic import BaseModel
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import jmespath
+from fastapi.openapi.docs import get_swagger_ui_html
 
 #--------------------------------------------------------------------------
 # Function: csvtojson
@@ -112,7 +115,7 @@ def csvtojson(csvFilePath,dictionaryName="data"):
       return json_dictionary
 
 #--------------------------------------------------------------------------
-# Read settings from config.cfg file
+# Read settings from config.py file
 #--------------------------------------------------------------------------
 config = configparser.ConfigParser()
 config.read('config.cfg')
@@ -121,6 +124,15 @@ debug=config['settings']['debug']
 allowrawfiles=config['settings']['allowrawfiles']
 contenttyperaw=config['settings']['contenttyperaw']
 
+# Create POST parameter classes so body field entry shows up in OpenAPI Docs.
+# It looks like these will auto-parse the JSON body to its parts automatically.
+class PostParamsJsonGetFile(BaseModel):
+    jsonfile: str
+
+class PostParamsJsonQueryFile(BaseModel):
+    jsonfile: str
+    jmescriteria: str    
+    
 #--------------------------------------------------------------------------
 # Initialize app
 #--------------------------------------------------------------------------
@@ -293,20 +305,24 @@ async def jsonqueryfile(jsonfile,jmescriteria):
 # jsonfile - JSON file name without path.  Ex: states.csv or weather.json
 #--------------------------------------------------------------------------
 @app.post("/api/jsongetfile")
-async def jsongetfilepost(request: Request):
+async def jsongetfilepost(params: PostParamsJsonGetFile):
+#async def jsongetfilepost(request: Request):
 
  #------------------------------------------------
  # Let's do the work
  #------------------------------------------------
  try:  
 
-   jsondata=""
+   ##jsondata=""
  
    # Get the JSON post request data 
-   jsonreqdata = await request.json()
+   ##jsonreqdata = await request.json()
 
    # Get fields from the posted JSON data
-   jsonfile = jsonreqdata['jsonfile']
+   ##jsonfile = jsonreqdata['jsonfile']
+
+   # Get fields from the posted JSON data
+   jsonfile = params.jsonfile
 
    # Build full path to CSV/JSON file 
    fullpath=f"{mockfiledirectory}/{jsonfile}"
@@ -373,21 +389,26 @@ async def jsongetfilepost(request: Request):
 # jmescriteria - JMES query criteria. Ex for states.csv: data[?Abbreviation='MN']
 #--------------------------------------------------------------------------
 @app.post("/api/jsonqueryfile")
-async def jsonqueryfilepost(request: Request):
+async def jsonqueryfilepost(params: PostParamsJsonQueryFile):
+##async def jsonqueryfilepost(request: Request):
 
  #------------------------------------------------
  # Let's do the work
  #------------------------------------------------
  try:  
 
-   jsondata=""
+   ##jsondata=""
  
    # Get the JSON post request data 
-   jsonreqdata = await request.json()
+   ##jsonreqdata = await request.json()
 
    # Get fields from the posted JSON data
-   jsonfile = jsonreqdata['jsonfile']
-   jmescriteria = jsonreqdata['jmescriteria']
+   ##jsonfile = jsonreqdata['jsonfile']
+   ##jmescriteria = jsonreqdata['jmescriteria']
+  
+   # Get fields from the posted JSON data
+   jsonfile = params.jsonfile 
+   jmescriteria = params.jmescriteria
 
    # Build full path to CSV/JSON file 
    fullpath=f"{mockfiledirectory}/{jsonfile}"
