@@ -49,7 +49,14 @@ sh ./startapp.sh
 
 ## Initial API Test
 
-### Access the API for initial testing
+### Access the API for initial testing via OpenAPI
+`http://localhost:3001/api/docs`
+
+This URL will display the OpenAPI documentation where APIs can also be tested.   
+
+![image](https://github.com/richardschoen/fastapimockserver/assets/9791508/56712793-3322-40b6-ad59-80a5261b9ada)
+
+### Access the API for initial testing with simple URL test 
 
 Enter one of the following URLs to serve up a sample CSV and JSON file repectively.
 CSV files are converted on-the-fly to JSON before serving up results.
