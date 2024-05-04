@@ -56,6 +56,7 @@ from datetime import datetime
 from typing import Union
 from fastapi import FastAPI, Request,Response
 from pydantic import BaseModel
+from pydantic import BaseSettings
 from fastapi.responses import JSONResponse
 from fastapi.encoders import jsonable_encoder
 import jmespath
@@ -123,6 +124,8 @@ mockfiledirectory=config['settings']['mockfiledirectory']
 debug=config['settings']['debug']
 allowrawfiles=config['settings']['allowrawfiles']
 contenttyperaw=config['settings']['contenttyperaw']
+openapiurl=config['settings']['openapiurl']
+appdesc=config['settings']['appdesc']
 
 # Create POST parameter classes so body field entry shows up in OpenAPI Docs.
 # It looks like these will auto-parse the JSON body to its parts automatically.
@@ -132,11 +135,17 @@ class PostParamsJsonGetFile(BaseModel):
 class PostParamsJsonQueryFile(BaseModel):
     jsonfile: str
     jmescriteria: str    
+
+# Settings class for FastAPI app    
+class Settings(BaseSettings):
+    openapi_url: str = openapiurl
     
 #--------------------------------------------------------------------------
-# Initialize app
+# get FastAPI settings and Initialize app
 #--------------------------------------------------------------------------
-app = FastAPI()
+settings = Settings()
+
+app = FastAPI(openapi_url=settings.openapi_url)
 
 #--------------------------------------------------------------------------
 # Route function: root function route
@@ -144,7 +153,7 @@ app = FastAPI()
 #--------------------------------------------------------------------------
 @app.get("/")
 def readroot():
-    return {"Status ": "FastAPI JSON Mock Service is active"}
+    return {"Status ": f"{appdesc.strip()} is active"}
 
 #--------------------------------------------------------------------------
 # Route function: jsongetfile
